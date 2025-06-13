@@ -1,0 +1,179 @@
+:root {
+    --primary: #00b7ff;
+    --primary-dark: #007bb5;
+    --bg: #f4f6f8;
+    --card-bg: #ffffff;
+    --text: #2e2e2e;
+    --muted: #6c757d;
+    --border: #dcdfe3;
+    --radius: 10px;
+
+    --success: #28a745;
+    --success-hover: #218838;
+
+    --danger: #dc3545;
+    --danger-hover: #c82333;
+
+    --dark: #343a40;
+    --dark-hover: #23272b;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+}
+
+header {
+    background: var(--primary);
+    color: white;
+    padding: 25px;
+    text-align: center;
+    font-size: 1.8em;
+    font-weight: bold;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    border-bottom: 4px solid var(--primary-dark);
+}
+
+.container {
+    max-width: 850px;
+    margin: 40px auto;
+    background: var(--card-bg);
+    padding: 30px;
+    border-radius: var(--radius);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.05);
+}
+
+.ticket {
+    border: 1px solid var(--border);
+    padding: 20px;
+    border-radius: var(--radius);
+    margin-bottom: 20px;
+    background-color: #fcfcfd;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+    transition: transform 0.2s ease;
+}
+
+.ticket:hover {
+    transform: translateY(-2px);
+}
+
+.ticket strong {
+    font-size: 1.2em;
+    color: var(--primary-dark);
+}
+
+.ticket small {
+    color: var(--muted);
+    display: block;
+    margin-top: 6px;
+}
+
+.ticket .status {
+    margin-top: 10px;
+    font-weight: bold;
+    color: var(--primary-dark);
+}
+
+.actions {
+    margin-top: 15px;
+}
+
+.actions a,
+.action-btn {
+    display: inline-block;
+    padding: 8px 14px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-size: 0.9em;
+    font-weight: 500;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.actions a:hover,
+.action-btn:hover {
+    transform: translateY(-1px);
+}
+
+/* Botões específicos */
+.btn-accept {
+    background-color: var(--success);
+    color: white;
+}
+
+.btn-accept:hover {
+    background-color: var(--success-hover);
+}
+
+.btn-reject {
+    background-color: var(--danger);
+    color: white;
+}
+
+.btn-reject:hover {
+    background-color: var(--danger-hover);
+}
+
+.btn-delete {
+    background-color: var(--dark);
+    color: white;
+}
+
+.btn-delete:hover {
+    background-color: var(--dark-hover);
+}
+
+form label {
+    margin-top: 15px;
+    display: block;
+    font-weight: bold;
+}
+
+form input,
+form textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    margin-top: 5px;
+    font-size: 1em;
+}
+
+form textarea {
+    resize: vertical;
+    min-height: 120px;
+}
+
+button {
+    background: var(--primary);
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    font-size: 1em;
+    border-radius: var(--radius);
+    cursor: pointer;
+    margin-top: 20px;
+    transition: background 0.3s ease, transform 0.2s ease;
+}
+
+button:hover {
+    background: var(--primary-dark);
+    transform: translateY(-1px);
+}
+
+.success {
+    background: #dff0d8;
+    color: #3c763d;
+    padding: 10px 15px;
+    border-radius: var(--radius);
+    margin-bottom: 20px;
+    border: 1px solid #c3e6cb;
+}

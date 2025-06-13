@@ -1,5 +1,6 @@
 <?php
 session_start();
+
 if (!isset($_SESSION['messages'])) {
     $_SESSION['messages'] = [];
 }
@@ -12,15 +13,38 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         'name' => $name,
         'message' => $message,
         'created_at' => date('Y-m-d H:i:s'),
+        'status' => 'pendente',
     ];
 
-    echo "<p>Mensagem enviada!</p>";
+    $sent = true;
 }
 ?>
 
-<h1>Formulário de Contato</h1>
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <title>Contato</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header>Formulário de Contato</header>
+<div class="container">
+
+<?php if (isset($sent)): ?>
+    <div class="success">Mensagem enviada com sucesso!</div>
+<?php endif; ?>
+
 <form method="POST">
-    <label>Nome: <input type="text" name="name"></label><br><br>
-    <label>Mensagem: <textarea name="message"></textarea></label><br><br>
+    <label>Nome:</label>
+    <input type="text" name="name" required>
+
+    <label>Mensagem:</label>
+    <textarea name="message" required></textarea>
+
     <button type="submit">Enviar</button>
 </form>
+
+</div>
+</body>
+</html>
