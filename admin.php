@@ -1,7 +1,13 @@
 <?php
 session_start();
 
-if ($_COOKIE['admin'] !== 'true') {
+function is_admin_authenticated() {
+    if (!isset($_COOKIE['admin_auth'])) return false;
+    list($payload, $signature) = explode('.', $_COOKIE['admin_auth'] ?? '', 2);
+    return hash_equals(hash_hmac('sha256', $payload, "1111"), $signature) && $payload === 'admin';
+}
+
+if (!is_admin_authenticated()) {
     header('Location: adminLogin.php');
     exit;
 }
@@ -10,20 +16,23 @@ if (!isset($_SESSION['messages'])) {
     $_SESSION['messages'] = [];
 }
 
-if (isset($_GET['action'], $_GET['id'])) {
-    $id = (int)$_GET['id'];
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'], $_POST['id'])) {
+    $id = (int)$_POST['id'];
     if (isset($_SESSION['messages'][$id])) {
-        switch ($_GET['action']) {
-            case 'accept':
-                $_SESSION['messages'][$id]['status'] = 'aceito';
-                break;
-            case 'reject':
-                $_SESSION['messages'][$id]['status'] = 'rejeitado';
-                break;
-            case 'delete':
-                unset($_SESSION['messages'][$id]);
-                break;
-        }
+        switch ($_POST['action']) {
+    case 'accept':
+        $_SESSION['messages'][$id]['status'] = 'aceito';
+        break;
+    case 'reject':
+        $_SESSION['messages'][$id]['status'] = 'rejeitado';
+        break;
+    case 'delete':
+        unset($_SESSION['messages'][$id]);
+        break;
+    }
+
+    header('Location: admin.php');
+    exit;
     }
 }
 
@@ -56,14 +65,29 @@ $messages = $_SESSION['messages'];
 
         <div class="actions">
             <?php if ($msg['status'] === 'pendente'): ?>
-                <a href="?action=accept&id=<?= $id ?>" class="btn-accept">Aceitar</a>
-                <a href="?action=reject&id=<?= $id ?>" class="btn-reject">Rejeitar</a>
+                <form method="post" style="display:inline;">
+                <input type="hidden" name="action" value="accept">
+                <input type="hidden" name="id" value="<?= $id ?>">
+                <button type="submit" class="btn-accept">Aceitar</button>
+            </form>
+
+            <form method="post" style="display:inline;">
+                <input type="hidden" name="action" value="reject">
+                <input type="hidden" name="id" value="<?= $id ?>">
+                <button type="submit" class="btn-reject">Rejeitar</button>
+            </form>
             <?php endif; ?>
-                <a href="?action=delete&id=<?= $id ?>" class="btn-delete">Remover</a>
+                <form method="post" style="display:inline;">
+                <input type="hidden" name="action" value="delete">
+                <input type="hidden" name="id" value="<?= $id ?>">
+                <button type="submit" class="btn-delete">Remover</button>
+            </form>
+
         </div>
     </div>
 <?php endforeach; ?>
 
 </div>
+
 </body>
 </html>

@@ -44,7 +44,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     <button type="submit">Enviar</button>
 </form>
+<br>
+<a href="admin.php" class="btn-admin">Ir para Admin</a>
 
 </div>
+
 </body>
 </html>

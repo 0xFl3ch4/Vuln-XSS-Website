@@ -7,7 +7,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $pin = $_POST['pin'] ?? '';
 
     if ($pin === $correctPin) {
-        setcookie('admin', 'true', time() + 3600, "/");
+        $payload = 'admin';
+        $signature = hash_hmac('sha256', $payload, '1111');
+        setcookie('admin_auth', $payload . '.' . $signature, [
+            'httponly' => true,
+            'secure' => false, // set to true if using HTTPS
+            'samesite' => 'Strict',
+            'path' => '/'
+        ]);
         header('Location: admin.php');
         exit;
     } else {
@@ -39,4 +46,3 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </div>
 </body>
 </html>
-c
