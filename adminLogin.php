@@ -10,7 +10,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $payload = 'admin';
         $signature = hash_hmac('sha256', $payload, '1111');
         setcookie('admin_auth', $payload . '.' . $signature, [
-            'httponly' => true,
             'secure' => false, // set to true if using HTTPS
             'samesite' => 'Strict',
             'path' => '/'
